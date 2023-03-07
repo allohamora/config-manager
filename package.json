@@ -1,6 +1,6 @@
 {
   "name": "@allohamora/config-manager",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "config manager",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -17,6 +17,7 @@
   "scripts": {
     "build": "unbuild",
     "prepare": "husky install",
+    "test": "vitest",
     "format": "prettier . --check",
     "format:fix": "prettier --write .",
     "release": "standard-version --tag-prefix=",
@@ -53,7 +54,9 @@
     "lint-staged": "^13.1.2",
     "prettier": "^2.8.4",
     "standard-version": "^9.5.0",
-    "unbuild": "^1.1.2"
+    "unbuild": "^1.1.2",
+    "vite-tsconfig-paths": "^4.0.5",
+    "vitest": "^0.29.2"
   },
   "engines": {
     "node": ">=18.14.0",
