@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2022",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "target": "ESNext",
     "outDir": "dist",
     "baseUrl": ".",
     "declaration": true,
@@ -22,6 +22,7 @@
     "importsNotUsedAsValues": "remove",
     "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,
+    "allowSyntheticDefaultImports": true,
     "noUnusedParameters": false,
     "paths": {
       "src/*": ["src/*"]
