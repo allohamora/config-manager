@@ -1,0 +1,71 @@
+{
+  "name": "@allohamora/config-manager",
+  "version": "0.0.1",
+  "description": "config manager",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "prepare": "husky install",
+    "format": "prettier . --check",
+    "format:fix": "prettier --write .",
+    "release": "standard-version --tag-prefix=",
+    "release:minor": "standard-version --release-as minor --tag-prefix=",
+    "release:patch": "standard-version --release-as patch --tag-prefix=",
+    "release:major": "standard-version --release-as major --tag-prefix=",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allohamora/config-manager.git"
+  },
+  "keywords": [
+    "config",
+    "config-manager"
+  ],
+  "author": "https://github.com/allohamora",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/allohamora/config-manager/issues"
+  },
+  "homepage": "https://github.com/allohamora/config-manager#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-beautiful-sort": "^2.0.4",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
+    "prettier": "^2.8.4",
+    "standard-version": "^9.5.0",
+    "unbuild": "^1.1.2"
+  },
+  "engines": {
+    "node": ">=18.14.0",
+    "npm": ">=9.3.1"
+  },
+  "standard-version": {
+    "skip": {
+      "tag": true
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,yml,md}": "prettier --write",
+    "*.ts": "eslint --fix"
+  }
+}
