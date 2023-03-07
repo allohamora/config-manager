@@ -5,7 +5,7 @@
 ![test](https://github.com/allohamora/config-manager/actions/workflows/test.yml/badge.svg)
 ![release](https://github.com/allohamora/config-manager/actions/workflows/release.yml/badge.svg)
 
-The [Allohamora](https://github.com/allohamora) config-manager is a common utility to manage a config object with type and runtime guards
+The [Allohamora](https://github.com/allohamora) config-manager is a typesafe utility to manage a config object
 
 ## Requirements
 
@@ -28,9 +28,10 @@ npm i @allohamora/config-manager
 import { ConfigManager } from '@allohamora/config-manager';
 
 const configManager = new ConfigManager({
-  load: () => ({ secret: 'secret' }),
+  load: () => ({ secret: { password: 'changeme' } }),
 });
 
-configManager.getOrThrow('secret'); // string
+configManager.getOrThrow('secret'); // { password: "changeme" }
+configManager.getOrThrow('secret.password'); // "changeme"
 configManager.getOrThrow('unknown'); // typescript + runtime error
 ```
