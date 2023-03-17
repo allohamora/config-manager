@@ -5,7 +5,7 @@ interface Options<C> {
 }
 
 export class ConfigManager<C extends Record<string, unknown>, FC = Flatten<C>> {
-  public config: FC;
+  private config: FC;
 
   constructor({ load }: Options<C>) {
     this.config = flatten(load()) as FC;

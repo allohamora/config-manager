@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/allohamora/config-manager/compare/0.1.0...0.1.1) (2023-03-17)
+
+### Bug Fixes
+
+- add private modifier to config field ([10f038d](https://github.com/allohamora/config-manager/commit/10f038d6006c5c602fee7d2e16fd2bb09a12a741))
+
 ## [0.1.0](https://github.com/allohamora/config-manager/compare/0.0.1...0.1.0) (2023-03-07)
 
 ### Features
