@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/allohamora/config-manager/compare/0.1.1...0.1.2) (2023-03-28)
+
+### Bug Fixes
+
+- fix cjs issues ([6adede0](https://github.com/allohamora/config-manager/commit/6adede01834b01edbacb4bf71eea8238badae3f2))
+
 ### [0.1.1](https://github.com/allohamora/config-manager/compare/0.1.0...0.1.1) (2023-03-17)
 
 ### Bug Fixes
