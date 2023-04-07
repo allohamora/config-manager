@@ -12,9 +12,7 @@ export class EnvPicker<S> {
   constructor(private state: S, private nodeEnv: string) {}
 
   public default<NS extends NonNullable<S>>(newState: NonNullable<S>): EnvPicker<NS> {
-    if (newState === this.state) {
-      this.state ??= newState;
-    }
+    this.state ??= newState;
 
     return this as unknown as EnvPicker<NS>;
   }
