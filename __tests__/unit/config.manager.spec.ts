@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ConfigManager } from 'src/index.js';
+import { ConfigManager } from 'src/config.manager.js';
 
 describe('ConfigManager', () => {
   const manager = new ConfigManager({
