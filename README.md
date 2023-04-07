@@ -5,7 +5,7 @@
 ![test](https://github.com/allohamora/config-manager/actions/workflows/test.yml/badge.svg)
 ![release](https://github.com/allohamora/config-manager/actions/workflows/release.yml/badge.svg)
 
-The [Allohamora](https://github.com/allohamora) config-manager is a typesafe utility to manage a config object
+This package contains managers for creating in-code configs in a typesafe and stylish way.
 
 ## Requirements
 
@@ -22,16 +22,23 @@ The [Allohamora](https://github.com/allohamora) config-manager is a typesafe uti
 npm i @allohamora/config-manager
 ```
 
-## Usage
+## Usage of ConfigManager
 
 ```typescript
-import { ConfigManager } from '@allohamora/config-manager';
+import { ConfigManager, EnvManager } from '@allohamora/config-manager';
 
-const configManager = new ConfigManager({
-  load: () => ({ secret: { password: 'changeme' } }),
+const env = new EnvManager();
+const config = new ConfigManager({
+  load: () => ({
+    auth: {
+      email: env.pick('AUTH_EMAIL').default('example@example.com').value(), // string
+      password: env.get('AUTH_PASSWORD'), // string or the validation error,
+    },
+  }),
 });
 
-configManager.getOrThrow('secret'); // { password: "changeme" }
-configManager.getOrThrow('secret.password'); // "changeme"
-configManager.getOrThrow('unknown'); // typescript + runtime error
+config.getOrThrow('auth'); // { email: string, password?: string }
+config.get('auth.email'); // string
+config.get('auth.password'); // string | undefined
+config.getOrThrow('auth.password'); // string or the validation error
 ```
