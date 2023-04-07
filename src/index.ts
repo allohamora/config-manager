@@ -16,10 +16,12 @@ export class ConfigManager<C extends Record<string, unknown>, FC = Flatten<C>> {
   }
 
   public getOrThrow<K extends keyof FC>(key: K): FC[K] {
-    if (key in (this.config as object)) {
-      return this.config[key];
+    const value = this.config[key];
+
+    if (value === null || value === undefined) {
+      throw new Error(`key: ${key.toString()} is not found in the config`);
     }
 
-    throw new Error(`key: ${key.toString()} is not found in the config`);
+    return value;
   }
 }
