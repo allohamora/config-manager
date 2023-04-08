@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/allohamora/config-manager/compare/0.2.1...0.2.2) (2023-04-08)
+
+### Features
+
+- update README.md ([2d504ad](https://github.com/allohamora/config-manager/commit/2d504ad024113909f832be252ee1583d070cb896))
+
 ### [0.2.1](https://github.com/allohamora/config-manager/compare/0.2.0...0.2.1) (2023-04-08)
 
 ### Features
