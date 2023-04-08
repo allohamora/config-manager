@@ -33,7 +33,9 @@
   },
   "keywords": [
     "config",
-    "config-manager"
+    "config-manager",
+    "env",
+    "type-safe"
   ],
   "author": "https://github.com/allohamora",
   "license": "MIT",
