@@ -2,12 +2,25 @@ import { describe, it, expect } from 'vitest';
 import { ConfigManager } from 'src/config/config.manager.js';
 
 describe('ConfigManager', () => {
+  class User {
+    public name = 'test';
+  }
+
+  const notPlain = {
+    map: new Map(),
+    date: new Date(),
+    set: new Set(),
+    user: new User(),
+  };
+
   const manager = new ConfigManager({
     load: () => ({
       root: { sub: { inner: 1, arr: [1, 2, 3] } },
       root2: { empty: undefined, nullable: null },
       false: false,
       emptyString: '',
+      notPlain,
+      ...notPlain,
     }),
   });
 
@@ -51,6 +64,28 @@ describe('ConfigManager', () => {
     it('throws an error for not defined', () => {
       expect(() => manager.getOrThrow('hello' as 'root')).toThrow();
     });
+
+    it('returns not plain objects', () => {
+      expect(manager.getOrThrow('map')).toEqual(notPlain.map);
+      expect(manager.getOrThrow('notPlain.map')).toEqual(notPlain.map);
+      expect(() => manager.getOrThrow('map.size' as any)).toThrowError();
+      expect(() => manager.getOrThrow('notPlain.map.size' as any)).toThrowError();
+
+      expect(manager.getOrThrow('set')).toEqual(notPlain.set);
+      expect(manager.getOrThrow('notPlain.set')).toEqual(notPlain.set);
+      expect(() => manager.getOrThrow('set.size' as any)).toThrowError();
+      expect(() => manager.getOrThrow('notPlain.set.size' as any)).toThrowError();
+
+      expect(manager.getOrThrow('user')).toEqual(notPlain.user);
+      expect(manager.getOrThrow('notPlain.user')).toEqual(notPlain.user);
+      expect(() => manager.getOrThrow('user.name' as any)).toThrowError();
+      expect(() => manager.getOrThrow('notPlain.user.name' as any)).toThrowError();
+
+      expect(manager.getOrThrow('date')).toEqual(notPlain.date);
+      expect(manager.getOrThrow('notPlain.date')).toEqual(notPlain.date);
+      expect(() => manager.getOrThrow('date.toISOString' as any)).toThrowError();
+      expect(() => manager.getOrThrow('notPlain.date.toISOString' as any)).toThrowError();
+    });
   });
 
   describe('get', () => {
@@ -60,6 +95,28 @@ describe('ConfigManager', () => {
 
     it('returns undefined', () => {
       expect(manager.get('root2.empty')).toEqual(undefined);
+    });
+
+    it('returns not plain objects', () => {
+      expect(manager.get('map')).toEqual(notPlain.map);
+      expect(manager.get('notPlain.map')).toEqual(notPlain.map);
+      expect(manager.get('map.size' as any)).toEqual(undefined);
+      expect(manager.get('notPlain.map.size' as any)).toEqual(undefined);
+
+      expect(manager.get('set')).toEqual(notPlain.set);
+      expect(manager.get('notPlain.set')).toEqual(notPlain.set);
+      expect(manager.get('set.size' as any)).toEqual(undefined);
+      expect(manager.get('notPlain.set.size' as any)).toEqual(undefined);
+
+      expect(manager.get('user')).toEqual(notPlain.user);
+      expect(manager.get('notPlain.user')).toEqual(notPlain.user);
+      expect(manager.get('user.name' as any)).toEqual(undefined);
+      expect(manager.get('notPlain.user.name' as any)).toEqual(undefined);
+
+      expect(manager.get('date')).toEqual(notPlain.date);
+      expect(manager.get('notPlain.date')).toEqual(notPlain.date);
+      expect(manager.get('date.toISOString' as any)).toEqual(undefined);
+      expect(manager.get('notPlain.date.toISOString' as any)).toEqual(undefined);
     });
   });
 });
