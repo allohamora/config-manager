@@ -1,9 +1,9 @@
-// original https://twitter.com/diegohaz/status/1309489079378219009
+type SupportedValues = bigint | boolean | null | number | string | symbol | undefined | Record<string, any>;
+
+// original https://github.com/ghoullier/awesome-template-literal-types#dot-notation-string-type-safe
 export type PathImpl<T, K extends keyof T> = K extends string
-  ? T[K] extends Record<string, any>
-    ? T[K] extends ArrayLike<any>
-      ? K
-      : K | `${K}.${PathImpl<T[K], keyof T[K]>}`
+  ? T[K] extends Record<string, SupportedValues>
+    ? K | `${K}.${PathImpl<T[K], keyof T[K]>}`
     : K
   : never;
 
@@ -23,13 +23,21 @@ export type Flatten<T> = {
   [key in Path<T>]: PathValue<T, key>;
 };
 
+export const isObject = (value: unknown): value is Record<string, unknown> => {
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+
+  return Object.getPrototypeOf(value) === Object.prototype;
+};
+
 export const flatten = <T extends Record<string, unknown>>(object: T, parentKey?: string): Flatten<T> => {
   return Object.entries(object).reduce((state, [key, value]) => {
     const currentKey = parentKey ? `${parentKey}.${key}` : key;
     const base = { ...state, [currentKey]: value };
 
-    if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
-      return { ...base, ...flatten(value as Record<string, unknown>, currentKey) };
+    if (isObject(value)) {
+      return { ...base, ...flatten(value, currentKey) };
     }
 
     return base;
