@@ -1,6 +1,6 @@
 {
   "name": "@allohamora/config-manager",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "config manager",
   "main": "./dist/index.cjs",
   "exports": {
@@ -42,21 +42,21 @@
   },
   "homepage": "https://github.com/allohamora/config-manager#readme",
   "devDependencies": {
-    "@commitlint/cli": "^17.4.4",
+    "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
-    "@typescript-eslint/parser": "^5.54.1",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.7.0",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-beautiful-sort": "^2.0.4",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.3",
-    "lint-staged": "^13.1.2",
-    "prettier": "^2.8.4",
+    "lint-staged": "^13.2.1",
+    "prettier": "^2.8.7",
     "standard-version": "^9.5.0",
-    "unbuild": "^1.1.2",
-    "vite-tsconfig-paths": "^4.0.5",
-    "vitest": "^0.29.2"
+    "unbuild": "^1.2.0",
+    "vite-tsconfig-paths": "^4.0.8",
+    "vitest": "^0.29.8"
   },
   "engines": {
     "node": ">=18.14.0",

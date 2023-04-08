@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { flatten } from 'src/utils.js';
+import { flatten } from 'src/utils/flatten.utils.js';
 
 describe('flatten', () => {
   const flattensTest = <T>(value: T) => {
