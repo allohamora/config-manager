@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 describe('EnvManager', () => {
   const envStub = {
     EMPTY_STRING: '',
+    SPACE_STRING: '   ',
     EMAIL: 'example@example.com',
     INTEGER: '123',
   } as Record<string, string | undefined>;
@@ -16,6 +17,7 @@ describe('EnvManager', () => {
       expect(env.pick('INTEGER').value()).toBe(envStub.INTEGER);
 
       expect(env.pick('EMPTY_STRING').value()).toEqual(undefined);
+      expect(env.pick('SPACE_STRING').value()).toEqual(undefined);
       expect(env.pick('OPTIONAL').value()).toEqual(undefined);
     });
   });
@@ -28,6 +30,7 @@ describe('EnvManager', () => {
 
     it('throws errors', () => {
       expect(() => env.pickOrThrow('EMPTY_STRING')).toThrowError();
+      expect(() => env.pickOrThrow('SPACE_STRING')).toThrowError();
       expect(() => env.pickOrThrow('OPTIONAL')).toThrowError();
     });
   });
