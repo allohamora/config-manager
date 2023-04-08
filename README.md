@@ -5,7 +5,7 @@
 ![test](https://github.com/allohamora/config-manager/actions/workflows/test.yml/badge.svg)
 ![release](https://github.com/allohamora/config-manager/actions/workflows/release.yml/badge.svg)
 
-This package contains managers for creating in-code configs in a typesafe and stylish way.
+This package contains managers for creating configs in a typesafe and stylish way.
 
 ## Requirements
 
