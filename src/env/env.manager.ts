@@ -40,7 +40,7 @@ export class EnvManager<C extends Record<string, string | undefined>> extends Ma
   public pickOrThrow<K extends keyof C>(key: K): EnvPicker<C[K]> {
     const value = this.source[key];
 
-    if (value === null || value === undefined || value === '') {
+    if (value === null || value === undefined || value.trim() === '') {
       throw new Error(`key: ${key.toString()} is empty`);
     }
 
