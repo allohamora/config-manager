@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/allohamora/config-manager/compare/0.1.2...0.2.0) (2023-04-08)
+
+### Features
+
+- add env-manager and env-picker ([30e2dcb](https://github.com/allohamora/config-manager/commit/30e2dcbbc637891d18272116b4186b3ea5035565))
+- add mapIfExist to env-picker ([f40413c](https://github.com/allohamora/config-manager/commit/f40413c9efa40a6d16fcfbae0bed9b1b64c0029b))
+- add null or undefined check to getOrThrow ([66da1ee](https://github.com/allohamora/config-manager/commit/66da1ee7d35110a05fc5afcab8b2ce1f7e240994))
+- add trim to pickOrThrow ([ff16658](https://github.com/allohamora/config-manager/commit/ff16658f4669215ecd7d5c4c50c5a47d6e5e1c63))
+- improve env-picker default typings ([39fefc8](https://github.com/allohamora/config-manager/commit/39fefc8c654f158680295bbc25fbb034a5c28f0e))
+
+### Bug Fixes
+
+- add correct typing to manager methods ([f05bbae](https://github.com/allohamora/config-manager/commit/f05bbae391e899fa3a31301ce3ffeee1db51e331))
+- fix incorrect default value changing ([57aa7a0](https://github.com/allohamora/config-manager/commit/57aa7a095d66586e9ccebc82e93ddf3feed54046))
+
 ### [0.1.2](https://github.com/allohamora/config-manager/compare/0.1.1...0.1.2) (2023-03-28)
 
 ### Bug Fixes
