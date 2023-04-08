@@ -22,7 +22,7 @@ This package contains managers for creating configs in a type-safe and stylish w
 npm i @allohamora/config-manager
 ```
 
-## Usage of ConfigManager
+## Usage
 
 ```typescript
 import { ConfigManager, EnvManager } from '@allohamora/config-manager';
