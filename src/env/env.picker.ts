@@ -11,10 +11,10 @@ export const wrapInEnvPickers = <C extends Record<string, string | undefined>>(c
 export class EnvPicker<S> {
   constructor(private state: S, private nodeEnv: string) {}
 
-  public default<NS extends NonNullable<S>>(newState: NonNullable<S>): EnvPicker<NS> {
+  public default<NS extends S>(newState: NS): EnvPicker<NS | NonNullable<S>> {
     this.state ??= newState;
 
-    return this as unknown as EnvPicker<NS>;
+    return this as unknown as EnvPicker<NS | NonNullable<S>>;
   }
 
   public defaultFor(envRecord: Record<string, S>) {
