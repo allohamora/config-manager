@@ -46,4 +46,24 @@ export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> ext
 
     return this.pick(key) as EnvPicker<E, C[K]>;
   }
+
+  public pickFor<K extends keyof C>(envRecord: Partial<Record<E, K>>): undefined | EnvPicker<E, C[K] | undefined> {
+    const key = envRecord[this.nodeEnv as E] as string | undefined;
+
+    if (!key) {
+      return;
+    }
+
+    return this.pick(key) as EnvPicker<E, C[K] | undefined>;
+  }
+
+  public pickForOrThrow<K extends keyof C>(envRecord: Partial<Record<E, K>>): EnvPicker<E, C[K]> {
+    const key = envRecord[this.nodeEnv as E] as string | undefined;
+
+    if (!key) {
+      throw new Error(`key is not found empty in nodeEnv: ${this.nodeEnv}`);
+    }
+
+    return this.pickOrThrow(key as K);
+  }
 }
