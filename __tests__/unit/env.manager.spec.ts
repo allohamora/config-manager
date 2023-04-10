@@ -35,7 +35,7 @@ describe('EnvManager', () => {
     });
   });
 
-  describe('pickOrThrow', () => {
+  describe('pickFor', () => {
     it('returns values', () => {
       expect(env.pickFor({ test: 'EMAIL' })?.value()).toBe(envStub.EMAIL);
       expect(env.pickFor({ test: 'INTEGER' })?.value()).toBe(envStub.INTEGER);
@@ -49,7 +49,7 @@ describe('EnvManager', () => {
     });
   });
 
-  describe('pickOrThrow', () => {
+  describe('pickForOrThrow', () => {
     it('returns values', () => {
       expect(env.pickForOrThrow({ test: 'EMAIL' }).value()).toBe(envStub.EMAIL);
       expect(env.pickForOrThrow({ test: 'INTEGER' }).value()).toBe(envStub.INTEGER);
