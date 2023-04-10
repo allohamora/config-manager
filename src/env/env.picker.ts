@@ -12,6 +12,9 @@ type MoveOptional<T, R> = T extends null
 
 export type BaseConfig = Record<string, string | undefined>;
 
+// original https://stackoverflow.com/a/59987826/15681288
+export type AtLeastOne<T> = { [K in keyof T]: Pick<T, K> }[keyof T];
+
 export const wrapInEnvPickers = <E extends string, C extends BaseConfig>(config: C, nodeEnv: E) => {
   return Object.keys(config).reduce((result, key) => {
     return { ...result, [key]: new EnvPicker(config[key], nodeEnv) };
@@ -27,7 +30,7 @@ export class EnvPicker<E extends string, S> {
     return this as unknown as EnvPicker<E, NS | NonNullable<S>>;
   }
 
-  public defaultFor(envRecord: Partial<Record<E, S>>) {
+  public defaultFor(envRecord: AtLeastOne<Record<E, S>>) {
     this.state ??= envRecord[this.nodeEnv] as S;
 
     return this;
