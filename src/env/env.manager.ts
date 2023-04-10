@@ -1,19 +1,19 @@
 import { Manager } from 'src/utils/manager.utils.js';
-import { EnvPicker } from './env.picker.js';
+import { BaseConfig, EnvPicker } from './env.picker.js';
 
-interface Options<C> {
+interface Options<E, C> {
   load?: () => C;
-  nodeEnv?: () => string;
+  nodeEnv?: () => E;
 }
 
-export class EnvManager<C extends Record<string, string | undefined>> extends Manager<C> {
+export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> extends Manager<C> {
   private nodeEnv: string;
-  private cache = new Map<keyof C, EnvPicker<string | undefined>>();
+  private cache = new Map<keyof C, EnvPicker<E, string | undefined>>();
 
   constructor({
     load = () => process.env as C,
-    nodeEnv = () => process.env.NODE_ENV ?? 'development',
-  }: Options<C> = {}) {
+    nodeEnv = () => (process.env.NODE_ENV ?? 'development') as E,
+  }: Options<E, C> = {}) {
     super({ load });
 
     this.nodeEnv = nodeEnv();
@@ -29,21 +29,21 @@ export class EnvManager<C extends Record<string, string | undefined>> extends Ma
     return value;
   }
 
-  public pick<K extends keyof C>(key: K): EnvPicker<C[K] | undefined> {
+  public pick<K extends keyof C>(key: K): EnvPicker<E, C[K] | undefined> {
     if (!this.cache.has(key)) {
-      this.cache.set(key, new EnvPicker(this.getEnvValue(key), this.nodeEnv));
+      this.cache.set(key, new EnvPicker(this.getEnvValue(key), this.nodeEnv) as EnvPicker<E, C[K] | undefined>);
     }
 
-    return this.cache.get(key) as EnvPicker<C[K] | undefined>;
+    return this.cache.get(key) as EnvPicker<E, C[K] | undefined>;
   }
 
-  public pickOrThrow<K extends keyof C>(key: K): EnvPicker<C[K]> {
+  public pickOrThrow<K extends keyof C>(key: K): EnvPicker<E, C[K]> {
     const value = this.source[key];
 
     if (value === null || value === undefined || value.trim() === '') {
       throw new Error(`key: ${key.toString()} is empty`);
     }
 
-    return this.pick(key) as EnvPicker<C[K]>;
+    return this.pick(key) as EnvPicker<E, C[K]>;
   }
 }
