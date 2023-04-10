@@ -29,6 +29,16 @@ export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> ext
     return value;
   }
 
+  private getKeyOrThrow<K extends keyof C>(envRecord: Partial<Record<E, K>>): K {
+    const key = envRecord[this.nodeEnv as E] as string | undefined;
+
+    if (!key) {
+      throw new Error(`key is not found empty in nodeEnv: ${this.nodeEnv}`);
+    }
+
+    return key as K;
+  }
+
   public pick<K extends keyof C>(key: K): EnvPicker<E, C[K] | undefined> {
     if (!this.cache.has(key)) {
       this.cache.set(key, new EnvPicker(this.getEnvValue(key), this.nodeEnv) as EnvPicker<E, C[K] | undefined>);
@@ -58,12 +68,24 @@ export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> ext
   }
 
   public pickForOrThrow<K extends keyof C>(envRecord: Partial<Record<E, K>>): EnvPicker<E, C[K]> {
+    const key = this.getKeyOrThrow(envRecord);
+
+    return this.pickOrThrow(key as K);
+  }
+
+  public getFor<K extends keyof C>(envRecord: Partial<Record<E, K>>) {
     const key = envRecord[this.nodeEnv as E] as string | undefined;
 
     if (!key) {
-      throw new Error(`key is not found empty in nodeEnv: ${this.nodeEnv}`);
+      return;
     }
 
-    return this.pickOrThrow(key as K);
+    return this.get(key as K);
+  }
+
+  public getForOrThrow<K extends keyof C>(envRecord: Partial<Record<E, K>>) {
+    const key = this.getKeyOrThrow(envRecord);
+
+    return this.getOrThrow(key as K);
   }
 }
