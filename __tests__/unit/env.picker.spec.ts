@@ -21,12 +21,12 @@ describe('EnvPicker', () => {
     });
 
     it('doesn`t set default value for environment', () => {
-      expect(new EnvPicker(undefined as string | undefined, 'test').defaultFor({ production: '123' }).value()).toBe(
-        undefined,
-      );
-      expect(new EnvPicker(undefined as string | undefined, 'test').defaultFor({ development: '123' }).value()).toBe(
-        undefined,
-      );
+      expect(
+        new EnvPicker(undefined as string | undefined, 'test' as string).defaultFor({ production: '123' }).value(),
+      ).toBe(undefined);
+      expect(
+        new EnvPicker(undefined as string | undefined, 'test' as string).defaultFor({ development: '123' }).value(),
+      ).toBe(undefined);
 
       expect(new EnvPicker(false as boolean | undefined, 'test').defaultFor({ test: true }).value()).toBe(false);
       expect(new EnvPicker('', 'test').defaultFor({ test: '123' }).value()).toBe('');
