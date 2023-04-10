@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/allohamora/config-manager/compare/0.3.0...0.4.0) (2023-04-10)
+
+### Features
+
+- add atLeastOne to for methods ([1b43a5f](https://github.com/allohamora/config-manager/commit/1b43a5f01bf231d7f4935d62b0d7581b080f94d1))
+- add EnvPicker export ([9d03bc8](https://github.com/allohamora/config-manager/commit/9d03bc874e0d65416a18ac1b0f3a02af915fbcf0))
+- add getFor and getForOrThrow ([51dbf8c](https://github.com/allohamora/config-manager/commit/51dbf8c2c98af632758ce2dcd9e866d184207066))
+- add pickFor and pickForOrThrow ([689b5ba](https://github.com/allohamora/config-manager/commit/689b5baabe7acf9c88ae25d668d60deca31b9649))
+- improve nodeEnv typings ([3673a1d](https://github.com/allohamora/config-manager/commit/3673a1da2baeba6a0f462f671fa5ec2f99981a8a))
+
+### Bug Fixes
+
+- rename mapIfExist to mapIfExists ([2d1c8e4](https://github.com/allohamora/config-manager/commit/2d1c8e4fb0a7b0d22ff61a23434fdf142e7cf19f))
+
 ## [0.3.0](https://github.com/allohamora/config-manager/compare/0.2.2...0.3.0) (2023-04-08)
 
 ### Features

@@ -1,5 +1,5 @@
-export type WrappedInEnvPickers<T> = {
-  [K in keyof T]: EnvPicker<T[K]>;
+export type WrappedInEnvPickers<E extends string, T> = {
+  [K in keyof T]: EnvPicker<E, T[K]>;
 };
 
 type MoveOptional<T, R> = T extends null
@@ -10,22 +10,27 @@ type MoveOptional<T, R> = T extends null
   ? R | undefined
   : R;
 
-export const wrapInEnvPickers = <C extends Record<string, string | undefined>>(config: C, nodeEnv: string) => {
+export type BaseConfig = Record<string, string | undefined>;
+
+// original https://stackoverflow.com/a/59987826/15681288
+export type AtLeastOne<T> = { [K in keyof T]: Pick<T, K> }[keyof T];
+
+export const wrapInEnvPickers = <E extends string, C extends BaseConfig>(config: C, nodeEnv: E) => {
   return Object.keys(config).reduce((result, key) => {
     return { ...result, [key]: new EnvPicker(config[key], nodeEnv) };
-  }, {} as WrappedInEnvPickers<C>);
+  }, {} as WrappedInEnvPickers<E, C>);
 };
 
-export class EnvPicker<S> {
-  constructor(private state: S, private nodeEnv: string) {}
+export class EnvPicker<E extends string, S> {
+  constructor(private state: S, private nodeEnv: E) {}
 
-  public default<NS extends S>(newState: NS): EnvPicker<NS | NonNullable<S>> {
+  public default<NS extends S>(newState: NS): EnvPicker<E, NS | NonNullable<S>> {
     this.state ??= newState;
 
-    return this as unknown as EnvPicker<NS | NonNullable<S>>;
+    return this as unknown as EnvPicker<E, NS | NonNullable<S>>;
   }
 
-  public defaultFor(envRecord: Record<string, S>) {
+  public defaultFor(envRecord: AtLeastOne<Record<E, S>>) {
     this.state ??= envRecord[this.nodeEnv] as S;
 
     return this;
@@ -34,15 +39,15 @@ export class EnvPicker<S> {
   public map<R>(mapper: (state: S) => R) {
     this.state = mapper(this.state) as unknown as S;
 
-    return this as unknown as EnvPicker<R>;
+    return this as unknown as EnvPicker<E, R>;
   }
 
-  public mapIfExist<R>(mapper: (state: NonNullable<S>) => R) {
+  public mapIfExists<R>(mapper: (state: NonNullable<S>) => R) {
     if (this.state !== null && this.state !== undefined) {
       this.state = mapper(this.state as NonNullable<S>) as unknown as S;
     }
 
-    return this as unknown as EnvPicker<MoveOptional<S, R>>;
+    return this as unknown as EnvPicker<E, MoveOptional<S, R>>;
   }
 
   public value() {
