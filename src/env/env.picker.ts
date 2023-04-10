@@ -37,7 +37,7 @@ export class EnvPicker<S> {
     return this as unknown as EnvPicker<R>;
   }
 
-  public mapIfExist<R>(mapper: (state: NonNullable<S>) => R) {
+  public mapIfExists<R>(mapper: (state: NonNullable<S>) => R) {
     if (this.state !== null && this.state !== undefined) {
       this.state = mapper(this.state as NonNullable<S>) as unknown as S;
     }

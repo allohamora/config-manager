@@ -42,18 +42,18 @@ describe('EnvPicker', () => {
     });
   });
 
-  describe('mapIfExist', () => {
+  describe('mapIfExists', () => {
     it('maps state if it exists', () => {
-      expect(new EnvPicker('123' as string | undefined, 'test').mapIfExist(Number).value()).toBe(123);
-      expect(new EnvPicker(undefined as string | undefined, 'test').default('123').mapIfExist(Number).value()).toBe(
+      expect(new EnvPicker('123' as string | undefined, 'test').mapIfExists(Number).value()).toBe(123);
+      expect(new EnvPicker(undefined as string | undefined, 'test').default('123').mapIfExists(Number).value()).toBe(
         123,
       );
-      expect(new EnvPicker('false', 'test').default('123').mapIfExist(JSON.parse).value()).toBe(false);
+      expect(new EnvPicker('false', 'test').default('123').mapIfExists(JSON.parse).value()).toBe(false);
 
-      expect(new EnvPicker(undefined as string | undefined, 'test').mapIfExist((state) => !!state).value()).toBe(
+      expect(new EnvPicker(undefined as string | undefined, 'test').mapIfExists((state) => !!state).value()).toBe(
         undefined,
       );
-      expect(new EnvPicker(null as string | null, 'test').mapIfExist((state) => !!state).value()).toBe(null);
+      expect(new EnvPicker(null as string | null, 'test').mapIfExists((state) => !!state).value()).toBe(null);
     });
   });
 
