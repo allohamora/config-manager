@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/allohamora/config-manager/compare/0.4.0...0.5.0) (2023-04-11)
+
+### ⚠ BREAKING CHANGES
+
+- pickFor now every time returns EnvPicker
+
+### Features
+
+- pickFor now every time returns EnvPicker ([e688443](https://github.com/allohamora/config-manager/commit/e688443b8f845bb7a5049d2e3663d3c87d0c7390))
+
 ## [0.4.0](https://github.com/allohamora/config-manager/compare/0.3.0...0.4.0) (2023-04-10)
 
 ### Features

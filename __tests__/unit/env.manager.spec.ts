@@ -37,15 +37,15 @@ describe('EnvManager', () => {
 
   describe('pickFor', () => {
     it('returns values', () => {
-      expect(env.pickFor({ test: 'EMAIL' })?.value()).toBe(envStub.EMAIL);
-      expect(env.pickFor({ test: 'INTEGER' })?.value()).toBe(envStub.INTEGER);
+      expect(env.pickFor({ test: 'EMAIL' }).value()).toBe(envStub.EMAIL);
+      expect(env.pickFor({ test: 'INTEGER' }).value()).toBe(envStub.INTEGER);
 
-      expect(env.pickFor({ production: 'EMAIL' })?.value()).toEqual(undefined);
-      expect(env.pickFor({ production: 'INTEGER' })?.value()).toEqual(undefined);
+      expect(env.pickFor({ production: 'EMAIL' }).value()).toEqual(undefined);
+      expect(env.pickFor({ production: 'INTEGER' }).value()).toEqual(undefined);
 
-      expect(env.pickFor({ test: 'EMPTY_STRING' })?.value()).toEqual(undefined);
-      expect(env.pickFor({ test: 'SPACE_STRING' })?.value()).toEqual(undefined);
-      expect(env.pickFor({ test: 'OPTIONAL' })?.value()).toEqual(undefined);
+      expect(env.pickFor({ test: 'EMPTY_STRING' }).value()).toEqual(undefined);
+      expect(env.pickFor({ test: 'SPACE_STRING' }).value()).toEqual(undefined);
+      expect(env.pickFor({ test: 'OPTIONAL' }).value()).toEqual(undefined);
     });
   });
 

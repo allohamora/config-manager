@@ -57,11 +57,11 @@ export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> ext
     return this.pick(key) as EnvPicker<E, C[K]>;
   }
 
-  public pickFor<K extends keyof C>(envRecord: AtLeastOne<Record<E, K>>): undefined | EnvPicker<E, C[K] | undefined> {
+  public pickFor<K extends keyof C>(envRecord: AtLeastOne<Record<E, K>>): EnvPicker<E, C[K] | undefined> {
     const key = envRecord[this.nodeEnv as E] as string | undefined;
 
     if (!key) {
-      return;
+      return new EnvPicker(undefined, this.nodeEnv) as EnvPicker<E, undefined>;
     }
 
     return this.pick(key) as EnvPicker<E, C[K] | undefined>;
