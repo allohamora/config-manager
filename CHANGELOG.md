@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/allohamora/config-manager/compare/0.5.1...0.5.2) (2023-04-11)
+
+### Features
+
+- add more keywords ([0e18525](https://github.com/allohamora/config-manager/commit/0e185259f70f2717f208c3cee6d6781d23646e4c))
+
 ### [0.5.1](https://github.com/allohamora/config-manager/compare/0.5.0...0.5.1) (2023-04-11)
 
 ### Features

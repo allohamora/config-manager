@@ -1,6 +1,6 @@
 {
   "name": "@allohamora/config-manager",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "config manager",
   "main": "./dist/index.cjs",
   "exports": {
@@ -34,6 +34,9 @@
   "keywords": [
     "config",
     "config-manager",
+    "config-service",
+    "service",
+    "utils",
     "env",
     "type-safe"
   ],
