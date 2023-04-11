@@ -34,6 +34,9 @@
   "keywords": [
     "config",
     "config-manager",
+    "config-service",
+    "service",
+    "utils",
     "env",
     "type-safe"
   ],
