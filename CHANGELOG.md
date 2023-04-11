@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/allohamora/config-manager/compare/0.5.0...0.5.1) (2023-04-11)
+
+### Features
+
+- update README.md to fix missing README.md in npm ([666dcaf](https://github.com/allohamora/config-manager/commit/666dcaf614c9813ccad0bdf5d6b4fab22b3563dc))
+
 ## [0.5.0](https://github.com/allohamora/config-manager/compare/0.4.0...0.5.0) (2023-04-11)
 
 ### ⚠ BREAKING CHANGES
