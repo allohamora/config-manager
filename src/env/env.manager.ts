@@ -2,8 +2,8 @@ import { Manager } from 'src/utils/manager.utils.js';
 import { BaseConfig, AtLeastOne, EnvPicker } from './env.picker.js';
 
 interface Options<E, C> {
-  load?: () => C;
-  nodeEnv?: () => E;
+  getEnv?: () => C;
+  getNodeEnv?: () => E;
 }
 
 export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> extends Manager<C> {
@@ -11,12 +11,12 @@ export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> ext
   private cache = new Map<keyof C, EnvPicker<E, string | undefined>>();
 
   constructor({
-    load = () => process.env as C,
-    nodeEnv = () => (process.env.NODE_ENV ?? 'development') as E,
+    getEnv = () => process.env as C,
+    getNodeEnv = () => (process.env.NODE_ENV ?? 'development') as E,
   }: Options<E, C> = {}) {
-    super({ load });
+    super({ getSource: getEnv });
 
-    this.nodeEnv = nodeEnv();
+    this.nodeEnv = getNodeEnv();
   }
 
   private getEnvValue<K extends keyof C>(key: K) {

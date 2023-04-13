@@ -9,7 +9,7 @@ describe('EnvManager', () => {
     INTEGER: '123',
   } as Record<string, string | undefined>;
 
-  const env = new EnvManager({ load: () => envStub, nodeEnv: () => 'test' as 'test' | 'production' });
+  const env = new EnvManager({ getEnv: () => envStub, getNodeEnv: () => 'test' as 'test' | 'production' });
 
   describe('pick', () => {
     it('returns values', () => {

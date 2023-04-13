@@ -1,12 +1,12 @@
 interface Options<C> {
-  load: () => C;
+  getSource: () => C;
 }
 
 export class Manager<C extends Record<string, unknown>> {
   protected source: C;
 
-  constructor({ load }: Options<C>) {
-    this.source = load();
+  constructor({ getSource }: Options<C>) {
+    this.source = getSource();
   }
 
   public get<K extends keyof C>(key: K): C[K] {

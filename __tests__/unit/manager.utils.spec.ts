@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 describe('Manager', () => {
   const manager = new Manager({
-    load: () => ({
+    getSource: () => ({
       emptyString: '',
       nullable: null,
       empty: undefined,

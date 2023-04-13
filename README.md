@@ -29,7 +29,7 @@ import { ConfigManager, EnvManager } from '@allohamora/config-manager';
 
 const env = new EnvManager();
 const config = new ConfigManager({
-  load: () => ({
+  getConfig: () => ({
     auth: {
       email: env.pick('AUTH_EMAIL').default('example@example.com').value(), // string
       password: env.get('AUTH_PASSWORD'), // string or the validation error,
