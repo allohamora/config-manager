@@ -14,7 +14,7 @@ describe('ConfigManager', () => {
   };
 
   const manager = new ConfigManager({
-    load: () => ({
+    getConfig: () => ({
       root: { sub: { inner: 1, arr: [1, 2, 3] } },
       root2: { empty: undefined, nullable: null },
       false: false,
