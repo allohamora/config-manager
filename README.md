@@ -32,7 +32,7 @@ const config = new ConfigManager({
   getConfig: () => ({
     auth: {
       email: env.pick('AUTH_EMAIL').default('example@example.com').value(), // string
-      password: env.get('AUTH_PASSWORD'), // string or the validation error,
+      password: env.get('AUTH_PASSWORD'), // string | undefined,
     },
   }),
 });
