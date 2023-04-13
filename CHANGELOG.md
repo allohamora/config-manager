@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/allohamora/config-manager/compare/0.5.2...0.6.0) (2023-04-13)
+
+### ⚠ BREAKING CHANGES
+
+- replace load method with get + type
+
+### Features
+
+- replace load method with get + type ([3c2a8c2](https://github.com/allohamora/config-manager/commit/3c2a8c236ea815c46483cfbe0a9306450d3c04e7))
+
 ### [0.5.2](https://github.com/allohamora/config-manager/compare/0.5.1...0.5.2) (2023-04-11)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "@allohamora/config-manager",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "config manager",
   "main": "./dist/index.cjs",
   "exports": {
