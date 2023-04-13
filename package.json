@@ -38,7 +38,9 @@
     "service",
     "utils",
     "env",
-    "type-safe"
+    "type-safe",
+    "zero",
+    "dependencies"
   ],
   "author": "https://github.com/allohamora",
   "license": "MIT",
