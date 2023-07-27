@@ -47,12 +47,37 @@ describe('EnvManager', () => {
       expect(env.pickFor({ test: 'SPACE_STRING' }).value()).toEqual(undefined);
       expect(env.pickFor({ test: 'OPTIONAL' }).value()).toEqual(undefined);
     });
+
+    it('returns default values', () => {
+      expect(env.pickFor({ production: 'INTEGER', rest: 'EMAIL' }).value()).toBe(envStub.EMAIL);
+      expect(env.pickFor({ production: 'EMAIL', rest: 'INTEGER' }).value()).toBe(envStub.INTEGER);
+    });
+
+    it('returns environment values instead of default', () => {
+      expect(env.pickFor({ test: 'INTEGER', rest: 'EMAIL' }).value()).toBe(envStub.INTEGER);
+      expect(env.pickFor({ test: 'EMAIL', rest: 'INTEGER' }).value()).toBe(envStub.EMAIL);
+    });
+
+    it('returns undefined', () => {
+      expect(env.pickFor({ production: 'INTEGER', rest: '__TEST__' }).value()).toBe(undefined);
+      expect(env.pickFor({ production: 'EMAIL', rest: '__TEST__' }).value()).toBe(undefined);
+    });
   });
 
   describe('pickForOrThrow', () => {
     it('returns values', () => {
       expect(env.pickForOrThrow({ test: 'EMAIL' }).value()).toBe(envStub.EMAIL);
       expect(env.pickForOrThrow({ test: 'INTEGER' }).value()).toBe(envStub.INTEGER);
+    });
+
+    it('returns default values', () => {
+      expect(env.pickForOrThrow({ production: 'INTEGER', rest: 'EMAIL' }).value()).toBe(envStub.EMAIL);
+      expect(env.pickForOrThrow({ production: 'EMAIL', rest: 'INTEGER' }).value()).toBe(envStub.INTEGER);
+    });
+
+    it('returns environment values instead of default', () => {
+      expect(env.pickForOrThrow({ test: 'INTEGER', rest: 'EMAIL' }).value()).toBe(envStub.INTEGER);
+      expect(env.pickForOrThrow({ test: 'EMAIL', rest: 'INTEGER' }).value()).toBe(envStub.EMAIL);
     });
 
     it('throws errors', () => {
@@ -62,6 +87,9 @@ describe('EnvManager', () => {
 
       expect(() => env.pickForOrThrow({ production: 'EMAIL' })).toThrowError();
       expect(() => env.pickForOrThrow({ production: 'production' })).toThrowError();
+
+      expect(() => env.pickForOrThrow({ production: 'EMAIL', rest: '__TEST__' })).toThrowError();
+      expect(() => env.pickForOrThrow({ production: 'EMAIL', rest: 'rest' })).toThrowError();
     });
   });
 
@@ -77,6 +105,21 @@ describe('EnvManager', () => {
       expect(env.getFor({ test: 'SPACE_STRING' })).toEqual(envStub.SPACE_STRING);
       expect(env.getFor({ test: 'OPTIONAL' })).toEqual(undefined);
     });
+
+    it('returns default values', () => {
+      expect(env.getFor({ production: 'INTEGER', rest: 'EMAIL' })).toBe(envStub.EMAIL);
+      expect(env.getFor({ production: 'EMAIL', rest: 'INTEGER' })).toBe(envStub.INTEGER);
+    });
+
+    it('returns environment values instead of default', () => {
+      expect(env.getFor({ test: 'INTEGER', rest: 'EMAIL' })).toBe(envStub.INTEGER);
+      expect(env.getFor({ test: 'EMAIL', rest: 'INTEGER' })).toBe(envStub.EMAIL);
+    });
+
+    it('returns undefined', () => {
+      expect(env.getFor({ production: 'INTEGER', rest: '__TEST__' })).toBe(undefined);
+      expect(env.getFor({ production: 'EMAIL', rest: '__TEST__' })).toBe(undefined);
+    });
   });
 
   describe('getForOrThrow', () => {
@@ -87,10 +130,22 @@ describe('EnvManager', () => {
       expect(env.getForOrThrow({ test: 'SPACE_STRING' })).toEqual(envStub.SPACE_STRING);
     });
 
+    it('returns default values', () => {
+      expect(env.getForOrThrow({ production: 'INTEGER', rest: 'EMAIL' })).toBe(envStub.EMAIL);
+      expect(env.getForOrThrow({ production: 'EMAIL', rest: 'INTEGER' })).toBe(envStub.INTEGER);
+    });
+
+    it('returns environment values instead of default', () => {
+      expect(env.getForOrThrow({ test: 'INTEGER', rest: 'EMAIL' })).toBe(envStub.INTEGER);
+      expect(env.getForOrThrow({ test: 'EMAIL', rest: 'INTEGER' })).toBe(envStub.EMAIL);
+    });
+
     it('throws errors', () => {
       expect(() => env.getForOrThrow({ test: 'OPTIONAL' })).toThrowError();
+      expect(() => env.getForOrThrow({ test: 'OPTIONAL', rest: '__TEST__' })).toThrowError();
       expect(() => env.getForOrThrow({ production: 'EMAIL' })).toThrowError();
       expect(() => env.getForOrThrow({ production: 'production' })).toThrowError();
+      expect(() => env.getForOrThrow({ production: 'production', rest: 'rest' })).toThrowError();
     });
   });
 });

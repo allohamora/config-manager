@@ -11,9 +11,7 @@ type MoveOptional<Type, Value> = Type extends null
   : Value;
 
 export type BaseConfig = Record<string, string | undefined>;
-
-// original https://stackoverflow.com/a/59987826/15681288
-export type AtLeastOne<T> = { [K in keyof T]: Pick<T, K> }[keyof T];
+export type EnvRecord<NodeEnv extends string, Value> = Partial<Record<NodeEnv | 'rest', Value>>;
 
 export const wrapInEnvPickers = <NodeEnv extends string, Config extends BaseConfig>(
   config: Config,
@@ -33,8 +31,8 @@ export class EnvPicker<NodeEnv extends string, State> {
     return this as unknown as EnvPicker<NodeEnv, NewState | NonNullable<State>>;
   }
 
-  public defaultFor(envRecord: AtLeastOne<Record<NodeEnv, State>>) {
-    this.state ??= envRecord[this.nodeEnv] as State;
+  public defaultFor(envRecord: EnvRecord<NodeEnv, State>) {
+    this.state ??= envRecord[this.nodeEnv] ?? (envRecord.rest as State);
 
     return this;
   }
