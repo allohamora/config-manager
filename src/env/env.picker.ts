@@ -31,10 +31,12 @@ export class EnvPicker<NodeEnv extends string, State> {
     return this as unknown as EnvPicker<NodeEnv, NewState | NonNullable<State>>;
   }
 
-  public defaultFor(envRecord: EnvRecord<NodeEnv, State>) {
-    this.state ??= envRecord[this.nodeEnv] ?? (envRecord.rest as State);
+  public defaultFor<NewState extends State, EnvOptions extends EnvRecord<NodeEnv, NewState>>(envRecord: EnvOptions) {
+    this.state ??= (envRecord[this.nodeEnv] ?? envRecord.rest) as NewState;
 
-    return this;
+    return this as unknown as EnvOptions extends { rest: NewState }
+      ? EnvPicker<NodeEnv, NonNullable<NewState>>
+      : EnvPicker<NodeEnv, NewState>;
   }
 
   public map<Result>(mapper: (state: State) => Result) {
