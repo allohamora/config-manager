@@ -1,22 +1,22 @@
 type SupportedValues = bigint | boolean | null | number | string | symbol | undefined | Record<string, any>;
 
 // original https://github.com/ghoullier/awesome-template-literal-types#dot-notation-string-type-safe
-export type PathImpl<T, K extends keyof T> = K extends string
-  ? T[K] extends Record<string, SupportedValues>
-    ? K | `${K}.${PathImpl<T[K], keyof T[K]>}`
-    : K
+export type PathImpl<Obj, Key extends keyof Obj> = Key extends string
+  ? Obj[Key] extends Record<string, SupportedValues>
+    ? Key | `${Key}.${PathImpl<Obj[Key], keyof Obj[Key]>}`
+    : Key
   : never;
 
 export type Path<T> = PathImpl<T, keyof T> | keyof T;
 
-export type PathValue<T, P extends Path<T>> = P extends `${infer K}.${infer Rest}`
-  ? K extends keyof T
-    ? Rest extends Path<T[K]>
-      ? PathValue<T[K], Rest>
+export type PathValue<Obj, PathKey extends Path<Obj>> = PathKey extends `${infer Key}.${infer Rest}`
+  ? Key extends keyof Obj
+    ? Rest extends Path<Obj[Key]>
+      ? PathValue<Obj[Key], Rest>
       : never
     : never
-  : P extends keyof T
-  ? T[P]
+  : PathKey extends keyof Obj
+  ? Obj[PathKey]
   : never;
 
 export type Flatten<T> = {
