@@ -25,18 +25,18 @@ export const wrapInEnvPickers = <NodeEnv extends string, Config extends BaseConf
 export class EnvPicker<NodeEnv extends string, State> {
   constructor(private state: State, private nodeEnv: NodeEnv) {}
 
-  public default<NewState extends State>(newState: NewState) {
+  public default(newState: State) {
     this.state ??= newState;
 
-    return this as unknown as EnvPicker<NodeEnv, NewState | NonNullable<State>>;
+    return this as unknown as EnvPicker<NodeEnv, NonNullable<State>>;
   }
 
-  public defaultFor<NewState extends State, EnvOptions extends EnvRecord<NodeEnv, NewState>>(envRecord: EnvOptions) {
-    this.state ??= (envRecord[this.nodeEnv] ?? envRecord.rest) as NewState;
+  public defaultFor<E extends EnvRecord<NodeEnv, State>>(envRecord: E) {
+    this.state ??= (envRecord[this.nodeEnv] ?? envRecord.rest) as State;
 
-    return this as unknown as EnvOptions extends { rest: NewState }
-      ? EnvPicker<NodeEnv, NonNullable<NewState>>
-      : EnvPicker<NodeEnv, NewState>;
+    return this as unknown as E extends { rest: State }
+      ? EnvPicker<NodeEnv, NonNullable<State>>
+      : EnvPicker<NodeEnv, State>;
   }
 
   public map<Result>(mapper: (state: State) => Result) {
