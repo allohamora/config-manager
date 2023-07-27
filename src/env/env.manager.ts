@@ -1,25 +1,25 @@
 import { Manager } from 'src/utils/manager.utils.js';
-import { BaseConfig, AtLeastOne, EnvPicker } from './env.picker.js';
+import { BaseConfig, EnvPicker, EnvRecord } from './env.picker.js';
 
-interface Options<E, C> {
-  getEnv?: () => C;
-  getNodeEnv?: () => E;
+interface Options<NodeEnv, Env> {
+  getEnv?: () => Env;
+  getNodeEnv?: () => NodeEnv;
 }
 
-export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> extends Manager<C> {
+export class EnvManager<NodeEnv extends string, Config extends BaseConfig = BaseConfig> extends Manager<Config> {
   private nodeEnv: string;
-  private cache = new Map<keyof C, EnvPicker<E, string | undefined>>();
+  private cache = new Map<keyof Config, EnvPicker<NodeEnv, string | undefined>>();
 
   constructor({
-    getEnv = () => process.env as C,
-    getNodeEnv = () => (process.env.NODE_ENV ?? 'development') as E,
-  }: Options<E, C> = {}) {
+    getEnv = () => process.env as Config,
+    getNodeEnv = () => (process.env.NODE_ENV ?? 'development') as NodeEnv,
+  }: Options<NodeEnv, Config> = {}) {
     super({ getSource: getEnv });
 
     this.nodeEnv = getNodeEnv();
   }
 
-  private getEnvValue<K extends keyof C>(key: K) {
+  private getEnvValue<Key extends keyof Config>(key: Key) {
     const value = this.source[key];
 
     if (value === null || value === undefined || value.trim() === '') {
@@ -29,63 +29,66 @@ export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> ext
     return value;
   }
 
-  private getKeyOrThrow<K extends keyof C>(envRecord: AtLeastOne<Record<E, K>>): K {
-    const key = envRecord[this.nodeEnv as E] as string | undefined;
+  private getKeyOrThrow<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>) {
+    const key: Key | undefined = envRecord[this.nodeEnv as NodeEnv] ?? envRecord.rest;
 
     if (!key) {
       throw new Error(`key is not found empty in nodeEnv: ${this.nodeEnv}`);
     }
 
-    return key as K;
+    return key;
   }
 
-  public pick<K extends keyof C>(key: K): EnvPicker<E, C[K] | undefined> {
+  public pick<Key extends keyof Config>(key: Key) {
     if (!this.cache.has(key)) {
-      this.cache.set(key, new EnvPicker(this.getEnvValue(key), this.nodeEnv) as EnvPicker<E, C[K] | undefined>);
+      this.cache.set(
+        key,
+        new EnvPicker(this.getEnvValue(key), this.nodeEnv) as EnvPicker<NodeEnv, Config[Key] | undefined>,
+      );
     }
 
-    return this.cache.get(key) as EnvPicker<E, C[K] | undefined>;
+    return this.cache.get(key) as EnvPicker<NodeEnv, Config[Key] | undefined>;
   }
 
-  public pickOrThrow<K extends keyof C>(key: K): EnvPicker<E, C[K]> {
+  public pickOrThrow<Key extends keyof Config>(key: Key) {
     const value = this.source[key];
 
     if (value === null || value === undefined || value.trim() === '') {
       throw new Error(`key: ${key.toString()} is empty`);
     }
 
-    return this.pick(key) as EnvPicker<E, C[K]>;
+    return this.pick(key) as EnvPicker<NodeEnv, NonNullable<Config[Key]>>;
   }
 
-  public pickFor<K extends keyof C>(envRecord: AtLeastOne<Record<E, K>>): EnvPicker<E, C[K] | undefined> {
-    const key = envRecord[this.nodeEnv as E] as string | undefined;
+  public pickFor<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>) {
+    const key: Key | undefined = envRecord[this.nodeEnv as NodeEnv] ?? envRecord.rest;
 
     if (!key) {
-      return new EnvPicker(undefined, this.nodeEnv) as EnvPicker<E, undefined>;
+      return new EnvPicker(undefined, this.nodeEnv) as EnvPicker<NodeEnv, undefined>;
     }
 
-    return this.pick(key) as EnvPicker<E, C[K] | undefined>;
+    return this.pick(key) as EnvPicker<NodeEnv, Config[Key] | undefined>;
   }
 
-  public pickForOrThrow<K extends keyof C>(envRecord: AtLeastOne<Record<E, K>>): EnvPicker<E, C[K]> {
+  public pickForOrThrow<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>) {
     const key = this.getKeyOrThrow(envRecord);
 
-    return this.pickOrThrow(key as K);
+    return this.pickOrThrow(key);
   }
 
-  public getFor<K extends keyof C>(envRecord: AtLeastOne<Record<E, K>>) {
-    const key = envRecord[this.nodeEnv as E] as string | undefined;
+  public getFor<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>) {
+    const key: Key | undefined = envRecord[this.nodeEnv as NodeEnv] ?? envRecord.rest;
 
     if (!key) {
       return;
     }
 
-    return this.get(key as K);
+    return this.get(key);
   }
 
-  public getForOrThrow<K extends keyof C>(envRecord: AtLeastOne<Record<E, K>>) {
-    const key = this.getKeyOrThrow(envRecord);
+  public getForOrThrow<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>) {
+    const key: Key | undefined = this.getKeyOrThrow(envRecord);
 
-    return this.getOrThrow(key as K);
+    return this.getOrThrow(key);
   }
 }

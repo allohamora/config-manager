@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/allohamora/config-manager/compare/0.6.0...0.7.0) (2023-07-27)
+
+### Features
+
+- add rest to envRecord ([2d57b5d](https://github.com/allohamora/config-manager/commit/2d57b5d4e9ce2555cafd5b302ce0b4195c1b4a83))
+- improve defaultFor with rest return value ([304530d](https://github.com/allohamora/config-manager/commit/304530d2106ac0575fe06cc8a532be48e441d924))
+- improve orThrow methods typing ([d7f7590](https://github.com/allohamora/config-manager/commit/d7f7590e3ee04eef31edeb028752105056982346))
+
 ## [0.6.0](https://github.com/allohamora/config-manager/compare/0.5.2...0.6.0) (2023-04-13)
 
 ### ⚠ BREAKING CHANGES

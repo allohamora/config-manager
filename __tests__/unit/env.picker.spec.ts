@@ -20,6 +20,17 @@ describe('EnvPicker', () => {
       expect(new EnvPicker(null as string | null, 'test').defaultFor({ test: '123' }).value()).toBe('123');
     });
 
+    it('sets rest values', () => {
+      expect(
+        new EnvPicker(undefined as string | undefined, 'test' as string)
+          .defaultFor({ production: '123', rest: '321' })
+          .value(),
+      ).toBe('321');
+      expect(
+        new EnvPicker(null as string | null, 'test' as string).defaultFor({ production: '123', rest: '321' }).value(),
+      ).toBe('321');
+    });
+
     it('doesn`t set default value for environment', () => {
       expect(
         new EnvPicker(undefined as string | undefined, 'test' as string).defaultFor({ production: '123' }).value(),
@@ -29,7 +40,7 @@ describe('EnvPicker', () => {
       ).toBe(undefined);
 
       expect(new EnvPicker(false as boolean | undefined, 'test').defaultFor({ test: true }).value()).toBe(false);
-      expect(new EnvPicker('', 'test').defaultFor({ test: '123' }).value()).toBe('');
+      expect(new EnvPicker('' as string | undefined, 'test').defaultFor({ test: '123' }).value()).toBe('');
     });
   });
 
@@ -37,6 +48,9 @@ describe('EnvPicker', () => {
     it('maps state', () => {
       expect(new EnvPicker('123', 'test').map(Number).value()).toBe(123);
       expect(new EnvPicker(undefined as string | undefined, 'test').default('123').map(Number).value()).toBe(123);
+      expect(
+        new EnvPicker(undefined as string | undefined, 'test').defaultFor({ rest: '123' }).map(Number).value(),
+      ).toBe(123);
       expect(new EnvPicker('false', 'test').default('123').map(JSON.parse).value()).toBe(false);
       expect(new EnvPicker(undefined as string | undefined, 'test').map((state) => !!state).value()).toBe(false);
     });
