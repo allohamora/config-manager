@@ -47,14 +47,14 @@ export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> ext
     return this.cache.get(key) as EnvPicker<E, C[K] | undefined>;
   }
 
-  public pickOrThrow<K extends keyof C>(key: K): EnvPicker<E, C[K]> {
+  public pickOrThrow<K extends keyof C>(key: K): EnvPicker<E, NonNullable<C[K]>> {
     const value = this.source[key];
 
     if (value === null || value === undefined || value.trim() === '') {
       throw new Error(`key: ${key.toString()} is empty`);
     }
 
-    return this.pick(key) as EnvPicker<E, C[K]>;
+    return this.pick(key) as EnvPicker<E, NonNullable<C[K]>>;
   }
 
   public pickFor<K extends keyof C>(envRecord: AtLeastOne<Record<E, K>>): EnvPicker<E, C[K] | undefined> {
@@ -67,7 +67,7 @@ export class EnvManager<E extends string, C extends BaseConfig = BaseConfig> ext
     return this.pick(key) as EnvPicker<E, C[K] | undefined>;
   }
 
-  public pickForOrThrow<K extends keyof C>(envRecord: AtLeastOne<Record<E, K>>): EnvPicker<E, C[K]> {
+  public pickForOrThrow<K extends keyof C>(envRecord: AtLeastOne<Record<E, K>>): EnvPicker<E, NonNullable<C[K]>> {
     const key = this.getKeyOrThrow(envRecord);
 
     return this.pickOrThrow(key as K);
