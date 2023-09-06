@@ -9,11 +9,11 @@ export class Manager<Source extends Record<string, unknown>> {
     this.source = getSource();
   }
 
-  public get<Key extends keyof Source>(key: Key) {
+  public get<Key extends keyof Source>(key: Key): Source[Key] | undefined {
     return this.source[key];
   }
 
-  public getOrThrow<Key extends keyof Source>(key: Key) {
+  public getOrThrow<Key extends keyof Source>(key: Key): Source[Key] {
     const value = this.source[key];
 
     if (value === null || value === undefined) {

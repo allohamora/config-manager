@@ -7,8 +7,7 @@ interface Options<NodeEnv, Env> {
 }
 
 export class EnvManager<NodeEnv extends string, Config extends BaseConfig = BaseConfig> extends Manager<Config> {
-  private nodeEnv: string;
-  private cache = new Map<keyof Config, EnvPicker<NodeEnv, string | undefined>>();
+  private nodeEnv: NodeEnv;
 
   constructor({
     getEnv = () => process.env as Config,
@@ -19,7 +18,7 @@ export class EnvManager<NodeEnv extends string, Config extends BaseConfig = Base
     this.nodeEnv = getNodeEnv();
   }
 
-  private getEnvValue<Key extends keyof Config>(key: Key) {
+  private getEnvValue<Key extends keyof Config>(key: Key): Config[Key] | undefined {
     const value = this.source[key];
 
     if (value === null || value === undefined || value.trim() === '') {
@@ -29,8 +28,8 @@ export class EnvManager<NodeEnv extends string, Config extends BaseConfig = Base
     return value;
   }
 
-  private getKeyOrThrow<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>) {
-    const key: Key | undefined = envRecord[this.nodeEnv as NodeEnv] ?? envRecord.rest;
+  private getKeyOrThrow<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>): Key {
+    const key = envRecord[this.nodeEnv] ?? envRecord.rest;
 
     if (!key) {
       throw new Error(`key is not found empty in nodeEnv: ${this.nodeEnv}`);
@@ -39,45 +38,42 @@ export class EnvManager<NodeEnv extends string, Config extends BaseConfig = Base
     return key;
   }
 
-  public pick<Key extends keyof Config>(key: Key) {
-    if (!this.cache.has(key)) {
-      this.cache.set(
-        key,
-        new EnvPicker(this.getEnvValue(key), this.nodeEnv) as EnvPicker<NodeEnv, Config[Key] | undefined>,
-      );
-    }
-
-    return this.cache.get(key) as EnvPicker<NodeEnv, Config[Key] | undefined>;
+  public pick<Key extends keyof Config>(key: Key): EnvPicker<NodeEnv, Config[Key] | undefined> {
+    return new EnvPicker(this.getEnvValue(key), this.nodeEnv);
   }
 
-  public pickOrThrow<Key extends keyof Config>(key: Key) {
+  public pickOrThrow<Key extends keyof Config>(key: Key): EnvPicker<NodeEnv, NonNullable<Config[Key]>> {
     const value = this.source[key];
 
     if (value === null || value === undefined || value.trim() === '') {
       throw new Error(`key: ${key.toString()} is empty`);
     }
 
-    return this.pick(key) as EnvPicker<NodeEnv, NonNullable<Config[Key]>>;
+    return new EnvPicker(value, this.nodeEnv);
   }
 
-  public pickFor<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>) {
-    const key: Key | undefined = envRecord[this.nodeEnv as NodeEnv] ?? envRecord.rest;
+  public pickFor<Key extends keyof Config>(
+    envRecord: EnvRecord<NodeEnv, Key>,
+  ): EnvPicker<NodeEnv, Config[Key] | undefined> {
+    const key = envRecord[this.nodeEnv] ?? envRecord.rest;
 
     if (!key) {
-      return new EnvPicker(undefined, this.nodeEnv) as EnvPicker<NodeEnv, undefined>;
+      return new EnvPicker(undefined, this.nodeEnv);
     }
 
-    return this.pick(key) as EnvPicker<NodeEnv, Config[Key] | undefined>;
+    return this.pick(key);
   }
 
-  public pickForOrThrow<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>) {
+  public pickForOrThrow<Key extends keyof Config>(
+    envRecord: EnvRecord<NodeEnv, Key>,
+  ): EnvPicker<NodeEnv, NonNullable<Config[Key]>> {
     const key = this.getKeyOrThrow(envRecord);
 
     return this.pickOrThrow(key);
   }
 
-  public getFor<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>) {
-    const key: Key | undefined = envRecord[this.nodeEnv as NodeEnv] ?? envRecord.rest;
+  public getFor<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>): Config[Key] | undefined {
+    const key = envRecord[this.nodeEnv] ?? envRecord.rest;
 
     if (!key) {
       return;
@@ -86,8 +82,8 @@ export class EnvManager<NodeEnv extends string, Config extends BaseConfig = Base
     return this.get(key);
   }
 
-  public getForOrThrow<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>) {
-    const key: Key | undefined = this.getKeyOrThrow(envRecord);
+  public getForOrThrow<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>): Config[Key] {
+    const key = this.getKeyOrThrow(envRecord);
 
     return this.getOrThrow(key);
   }
