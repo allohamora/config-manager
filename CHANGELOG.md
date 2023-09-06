@@ -2,16 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.8.0](https://github.com/allohamora/config-manager/compare/0.6.0...0.8.0) (2023-09-06)
+### [0.8.1](https://github.com/allohamora/config-manager/compare/0.8.0...0.8.1) (2023-09-06)
 
 ### Features
 
-- add rest to envRecord ([2d57b5d](https://github.com/allohamora/config-manager/commit/2d57b5d4e9ce2555cafd5b302ce0b4195c1b4a83))
+- regenerate CHANGELOG.md ([2e3ca7e](https://github.com/allohamora/config-manager/commit/2e3ca7ef362cb4c22dfccd15575ffc411a5e7911))
+
+## [0.8.0](https://github.com/allohamora/config-manager/compare/0.7.0...0.8.0) (2023-09-06)
+
+### Features
+
 - add return types and remove unnecessary as casting ([642ccde](https://github.com/allohamora/config-manager/commit/642ccde036efe3cdad46edf114588c8c2f323378))
 - improve defaultFor response types ([7726b0f](https://github.com/allohamora/config-manager/commit/7726b0f2bf3bebd616042cbd557a32da1f88a135))
-- improve defaultFor with rest return value ([304530d](https://github.com/allohamora/config-manager/commit/304530d2106ac0575fe06cc8a532be48e441d924))
 - improve EnvPicker types ([4893b92](https://github.com/allohamora/config-manager/commit/4893b925313bbe50a6b4d7bdc4c616fbe5dd4e16))
-- improve orThrow methods typing ([d7f7590](https://github.com/allohamora/config-manager/commit/d7f7590e3ee04eef31edeb028752105056982346))
 - remove env.manager cache ([def7154](https://github.com/allohamora/config-manager/commit/def7154dad588b12c7c44f35e2c823e87ed36211))
 
 ## [0.7.0](https://github.com/allohamora/config-manager/compare/0.6.0...0.7.0) (2023-07-27)
