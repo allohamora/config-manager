@@ -8,7 +8,6 @@ interface Options<NodeEnv, Env> {
 
 export class EnvManager<NodeEnv extends string, Config extends BaseConfig = BaseConfig> extends Manager<Config> {
   private nodeEnv: string;
-  private cache = new Map<keyof Config, EnvPicker<NodeEnv, string | undefined>>();
 
   constructor({
     getEnv = () => process.env as Config,
@@ -40,14 +39,7 @@ export class EnvManager<NodeEnv extends string, Config extends BaseConfig = Base
   }
 
   public pick<Key extends keyof Config>(key: Key) {
-    if (!this.cache.has(key)) {
-      this.cache.set(
-        key,
-        new EnvPicker(this.getEnvValue(key), this.nodeEnv) as EnvPicker<NodeEnv, Config[Key] | undefined>,
-      );
-    }
-
-    return this.cache.get(key) as EnvPicker<NodeEnv, Config[Key] | undefined>;
+    return new EnvPicker(this.getEnvValue(key), this.nodeEnv) as EnvPicker<NodeEnv, Config[Key] | undefined>;
   }
 
   public pickOrThrow<Key extends keyof Config>(key: Key) {
