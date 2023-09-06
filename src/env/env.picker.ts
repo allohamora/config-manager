@@ -13,6 +13,12 @@ type MoveOptional<Type, Value> = Type extends null
 export type BaseConfig = Record<string, string | undefined>;
 export type EnvRecord<NodeEnv extends string, Value> = Partial<Record<NodeEnv | 'rest', Value>>;
 
+export type DefaultForResponse<NodeEnv extends string, State, NewState, EnvOptions> = EnvOptions extends {
+  rest: NewState;
+}
+  ? EnvPicker<NodeEnv, NonNullable<State> | EnvOptions[keyof EnvOptions] | EnvOptions['rest']>
+  : EnvPicker<NodeEnv, State | NewState>;
+
 export const wrapInEnvPickers = <NodeEnv extends string, Config extends BaseConfig>(
   config: Config,
   nodeEnv: NodeEnv,
@@ -31,14 +37,12 @@ export class EnvPicker<NodeEnv extends string, State> {
     return this as EnvPicker<NodeEnv, NewState | NonNullable<State>>;
   }
 
-  public defaultFor<NewState extends State, E extends EnvRecord<NodeEnv, NewState>>(
-    envRecord: E,
-  ): E extends { rest: NewState } ? EnvPicker<NodeEnv, NewState> : EnvPicker<NodeEnv, NewState | undefined> {
+  public defaultFor<NewState extends State, EnvOptions extends EnvRecord<NodeEnv, NewState>>(
+    envRecord: EnvOptions,
+  ): DefaultForResponse<NodeEnv, State, NewState, EnvOptions> {
     this.state ??= (envRecord[this.nodeEnv] ?? envRecord.rest) as State;
 
-    return this as unknown as E extends { rest: NewState }
-      ? EnvPicker<NodeEnv, NewState>
-      : EnvPicker<NodeEnv, NewState | undefined>;
+    return this as unknown as DefaultForResponse<NodeEnv, State, NewState, EnvOptions>;
   }
 
   public map<NewState>(mapper: (state: State) => NewState): EnvPicker<NodeEnv, NewState> {
