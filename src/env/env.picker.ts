@@ -25,13 +25,15 @@ export const wrapInEnvPickers = <NodeEnv extends string, Config extends BaseConf
 export class EnvPicker<NodeEnv extends string, State> {
   constructor(private state: State, private nodeEnv: NodeEnv) {}
 
-  public default(newState: State) {
+  public default(newState: State): EnvPicker<NodeEnv, NonNullable<State>> {
     this.state ??= newState;
 
-    return this as unknown as EnvPicker<NodeEnv, NonNullable<State>>;
+    return this as EnvPicker<NodeEnv, NonNullable<State>>;
   }
 
-  public defaultFor<E extends EnvRecord<NodeEnv, State>>(envRecord: E) {
+  public defaultFor<E extends EnvRecord<NodeEnv, State>>(
+    envRecord: E,
+  ): E extends { rest: State } ? EnvPicker<NodeEnv, NonNullable<State>> : EnvPicker<NodeEnv, State> {
     this.state ??= (envRecord[this.nodeEnv] ?? envRecord.rest) as State;
 
     return this as unknown as E extends { rest: State }
@@ -39,13 +41,15 @@ export class EnvPicker<NodeEnv extends string, State> {
       : EnvPicker<NodeEnv, State>;
   }
 
-  public map<Result>(mapper: (state: State) => Result) {
+  public map<Result>(mapper: (state: State) => Result): EnvPicker<NodeEnv, Result> {
     this.state = mapper(this.state) as unknown as State;
 
     return this as unknown as EnvPicker<NodeEnv, Result>;
   }
 
-  public mapIfExists<Result>(mapper: (state: NonNullable<State>) => Result) {
+  public mapIfExists<Result>(
+    mapper: (state: NonNullable<State>) => Result,
+  ): EnvPicker<NodeEnv, MoveOptional<State, Result>> {
     if (this.state !== null && this.state !== undefined) {
       this.state = mapper(this.state as NonNullable<State>) as unknown as State;
     }
@@ -53,7 +57,7 @@ export class EnvPicker<NodeEnv extends string, State> {
     return this as unknown as EnvPicker<NodeEnv, MoveOptional<State, Result>>;
   }
 
-  public value() {
+  public value(): State {
     return this.state;
   }
 }
