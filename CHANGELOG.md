@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.8.1](https://github.com/allohamora/config-manager/compare/0.8.0...0.8.1) (2023-09-06)
+
+### Features
+
+- regenerate CHANGELOG.md ([2e3ca7e](https://github.com/allohamora/config-manager/commit/2e3ca7ef362cb4c22dfccd15575ffc411a5e7911))
+
 ## [0.8.0](https://github.com/allohamora/config-manager/compare/0.7.0...0.8.0) (2023-09-06)
 
 ### Features
