@@ -13,7 +13,7 @@ export class Manager<Source extends Record<string, unknown>> {
     return this.source[key];
   }
 
-  public getOrThrow<Key extends keyof Source>(key: Key): Source[Key] {
+  public getOrThrow<Key extends keyof Source>(key: Key): NonNullable<Source[Key]> {
     const value = this.source[key];
 
     if (value === null || value === undefined) {

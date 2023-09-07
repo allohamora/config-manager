@@ -82,7 +82,7 @@ export class EnvManager<NodeEnv extends string, Config extends BaseConfig = Base
     return this.get(key);
   }
 
-  public getForOrThrow<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>): Config[Key] {
+  public getForOrThrow<Key extends keyof Config>(envRecord: EnvRecord<NodeEnv, Key>): NonNullable<Config[Key]> {
     const key = this.getKeyOrThrow(envRecord);
 
     return this.getOrThrow(key);
