@@ -22,7 +22,7 @@ export type DefaultForResponse<NodeEnv extends string, State, NewState, EnvOptio
 export const wrapInEnvPickers = <NodeEnv extends string, Config extends BaseConfig>(
   config: Config,
   nodeEnv: NodeEnv,
-) => {
+): WrappedInEnvPickers<NodeEnv, Config> => {
   return Object.keys(config).reduce((result, key) => {
     return { ...result, [key]: new EnvPicker(config[key], nodeEnv) };
   }, {} as WrappedInEnvPickers<NodeEnv, Config>);

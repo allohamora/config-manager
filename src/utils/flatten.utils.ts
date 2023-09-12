@@ -1,4 +1,4 @@
-type SupportedValues = bigint | boolean | null | number | string | symbol | undefined | Record<string, any>;
+type SupportedValues = bigint | boolean | null | number | string | symbol | undefined | object;
 
 // original https://github.com/ghoullier/awesome-template-literal-types#dot-notation-string-type-safe
 export type PathImpl<Obj, Key extends keyof Obj> = Key extends string
