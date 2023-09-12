@@ -1,11 +1,11 @@
-interface Options<Source> {
+export type ManagerOptions<Source> = {
   getSource: () => Source;
-}
+};
 
 export class Manager<Source extends Record<string, unknown>> {
   protected source: Source;
 
-  constructor({ getSource }: Options<Source>) {
+  constructor({ getSource }: ManagerOptions<Source>) {
     this.source = getSource();
   }
 

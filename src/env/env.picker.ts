@@ -22,14 +22,20 @@ export type DefaultForResponse<NodeEnv extends string, State, NewState, EnvOptio
 export const wrapInEnvPickers = <NodeEnv extends string, Config extends BaseConfig>(
   config: Config,
   nodeEnv: NodeEnv,
-) => {
-  return Object.keys(config).reduce((result, key) => {
-    return { ...result, [key]: new EnvPicker(config[key], nodeEnv) };
-  }, {} as WrappedInEnvPickers<NodeEnv, Config>);
+): WrappedInEnvPickers<NodeEnv, Config> => {
+  return Object.keys(config).reduce(
+    (result, key) => {
+      return { ...result, [key]: new EnvPicker(config[key], nodeEnv) };
+    },
+    {} as WrappedInEnvPickers<NodeEnv, Config>,
+  );
 };
 
 export class EnvPicker<NodeEnv extends string, State> {
-  constructor(private state: State, private nodeEnv: NodeEnv) {}
+  constructor(
+    private state: State,
+    private nodeEnv: NodeEnv,
+  ) {}
 
   public default<NewState extends State>(newState: NewState): EnvPicker<NodeEnv, NewState | NonNullable<State>> {
     this.state ??= newState;

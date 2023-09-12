@@ -1,10 +1,10 @@
 import { Manager } from 'src/utils/manager.utils.js';
 import { BaseConfig, EnvPicker, EnvRecord } from './env.picker.js';
 
-interface Options<NodeEnv, Env> {
+export type EnvManagerOptions<NodeEnv, Env> = {
   getEnv?: () => Env;
   getNodeEnv?: () => NodeEnv;
-}
+};
 
 export class EnvManager<NodeEnv extends string, Config extends BaseConfig = BaseConfig> extends Manager<Config> {
   private nodeEnv: NodeEnv;
@@ -12,7 +12,7 @@ export class EnvManager<NodeEnv extends string, Config extends BaseConfig = Base
   constructor({
     getEnv = () => process.env as Config,
     getNodeEnv = () => (process.env.NODE_ENV ?? 'development') as NodeEnv,
-  }: Options<NodeEnv, Config> = {}) {
+  }: EnvManagerOptions<NodeEnv, Config> = {}) {
     super({ getSource: getEnv });
 
     this.nodeEnv = getNodeEnv();

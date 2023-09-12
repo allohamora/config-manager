@@ -5,4 +5,6 @@ export default defineBuildConfig({
   alias: {
     src: join(__dirname, 'src'),
   },
+  failOnWarn: false,
+  sourcemap: true,
 });
