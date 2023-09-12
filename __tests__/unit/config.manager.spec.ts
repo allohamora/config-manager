@@ -17,6 +17,7 @@ describe('ConfigManager', () => {
     getConfig: () => ({
       root: { sub: { inner: 1, arr: [1, 2, 3] } },
       root2: { empty: undefined, nullable: null },
+      root3: { [0]: 123 },
       false: false,
       emptyString: '',
       notPlain,
@@ -43,6 +44,14 @@ describe('ConfigManager', () => {
 
     it('returns root2', () => {
       expect(manager.getOrThrow('root2')).toEqual({ empty: undefined, nullable: null });
+    });
+
+    it('returns root3', () => {
+      expect(manager.getOrThrow('root3')).toEqual({ [0]: 123 });
+    });
+
+    it('returns root3.0', () => {
+      expect(manager.getOrThrow('root3.0')).toEqual(123);
     });
 
     it('returns false', () => {
