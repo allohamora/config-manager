@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/allohamora/config-manager/compare/0.8.2...0.9.0) (2023-09-12)
+
+### Features
+
+- add option imports ([8154a93](https://github.com/allohamora/config-manager/commit/8154a933c4484b685e539e9188337c1114b73740))
+- add sourcemap ([c751701](https://github.com/allohamora/config-manager/commit/c7517018d0c0888545306588fb8c382f5f70de8c))
+- add support for numeric objects ([d44c80a](https://github.com/allohamora/config-manager/commit/d44c80a4ee8d083de5e4c5848120c9c609ea4bf3))
+
 ### [0.8.2](https://github.com/allohamora/config-manager/compare/0.8.1...0.8.2) (2023-09-07)
 
 ### Bug Fixes
